@@ -18,15 +18,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 
-// This line is not mandatory, but improves loading performances
 [assembly: CommandClass(typeof(AutoCAD_CSharp_plug_in2.MyCommands))]
 
 namespace AutoCAD_CSharp_plug_in2
 {
-    // This class is instantiated by AutoCAD for each document when
-    // a command is called by the user the first time in the context
-    // of a given document. In other words, non static data in this class
-    // is implicitly per-document!
+
     public class MyCommands
     {
         [DllImport("accore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "acedTrans")]
@@ -35,16 +31,10 @@ namespace AutoCAD_CSharp_plug_in2
 
         [CommandMethod("WPFP")]
         public void ShowWPFPalette()
-
         {
-
             if (_ps == null)
 
             {
-
-                // Create the palette set
-
-
 
                 _ps = new PaletteSet("WPF Palette");
 
@@ -53,13 +43,6 @@ namespace AutoCAD_CSharp_plug_in2
                 _ps.DockEnabled =
 
                   (DockSides)((int)DockSides.Left + (int)DockSides.Right);
-
-
-
-                // Create our first user control instance and
-
-                // host it on a palette using AddVisual()
-
 
 
                 UserControl1 uc = new UserControl1();
@@ -82,16 +65,8 @@ namespace AutoCAD_CSharp_plug_in2
 
             }
 
-
-
-            // Display our palette set
-
-
-
             _ps.KeepFocus = true;
-
             _ps.Visible = true;
-
         }
 
         [CommandMethod("1111")]
@@ -197,16 +172,13 @@ namespace AutoCAD_CSharp_plug_in2
                         // Center the plot
                         acPlSetVdr.SetPlotCentered(acPlSet, true);
 
-                        // Set the plot device to use
                         acPlSetVdr.SetPlotConfigurationName(acPlSet, "DWG to PDF.pc3", "ANSI_A_(8.50_x_11.00_Inches)");
+                        ///TMP
                         Stream s = File.Open(@"c:\plot\myplot.txt", FileMode.Create);
                         BinaryFormatter b = new BinaryFormatter();
                         b.Serialize(s, acPlSetVdr.GetCanonicalMediaNameList(acPlSet));
                         s.Close();
                         
-
-                        // Set the plot info as an override since it will
-                        // not be saved back to the layout
                         acPlInfo.OverrideSettings = acPlSet;
 
                         // Validate the plot info

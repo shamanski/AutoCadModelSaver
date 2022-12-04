@@ -18,12 +18,14 @@ namespace AutoCAD_CSharp_plug_in2
         private Database db;
         [DllImport("accore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "acedTrans")]
         static extern int acedTrans(double[] point, IntPtr fromRb, IntPtr toRb, int disp, double[] result);
+        
         public AcadApp()
         {
             doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             ed = doc.Editor;
             db = doc.Database;
         }
+        
         public void PrintAll()
         {
             int i = 1;
