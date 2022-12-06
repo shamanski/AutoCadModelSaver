@@ -96,10 +96,12 @@ namespace AutoCAD_CSharp_plug_in2
                 res = btr.Name;
                 btr.Close();
             }
+
             else
             {
                 res = blref.Name;
             }
+
             return res;
         }
 
